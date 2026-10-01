@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RunMath — Do Movimento ao Gráfico</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         CABEÇALHO
+    ========================== -->
+
+    <header class="header">
+
+        <div class="header-content">
+
+            <div class="brand">
+
+                <img
+                    src="assets/logo-runmath.png"
+                    alt="Logo RunMath"
+                    class="logo"
+                    onerror="this.style.display='none'"
+                >
+
+                <div>
+                    <h1>RunMath</h1>
+                    <p>Do movimento ao gráfico</p>
+                </div>
+
+            </div>
+
+            <img
+                src="assets/corredor.png"
+                alt="Corredor"
+                class="header-runner"
+                onerror="this.style.display='none'"
+            >
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <!-- =========================
+             INTRODUÇÃO
+        ========================== -->
+
+        <section class="intro-section">
+
+            <span class="tag">
+                GEOMETRIA ANALÍTICA
+            </span>
+
+            <h2>
+                A matemática por trás de uma corrida
+            </h2>
+
+            <p>
+                Descubra como tempo, distância e velocidade podem
+                ser representados por meio de uma função afim e de um gráfico.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             SIMULADOR
+        ========================== -->
+
+        <section class="simulator">
+
+            <div class="section-title">
+
+                <span>01</span>
+
+                <div>
+                    <h2>Simule uma corrida</h2>
+
+                    <p>
+                        Altere a velocidade e observe o movimento
+                        do corredor em tempo real.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- CONTROLE DE VELOCIDADE -->
+
+            <div class="speed-control">
+
+                <div class="speed-header">
+
+                    <div>
+                        <label for="velocidade">
+                            Velocidade do corredor
+                        </label>
+
+                        <p>
+                            Mova o controle para alterar a velocidade.
+                        </p>
+                    </div>
+
+                    <strong id="velocidadeDisplay">
+                        8 km/h
+                    </strong>
+
+                </div>
+
+
+                <input
+                    type="range"
+                    id="velocidade"
+                    min="1"
+                    max="20"
+                    value="8"
+                    step="0.5"
+                >
+
+                <div class="range-labels">
+
+                    <span>1 km/h</span>
+
+                    <span>20 km/h</span>
+
+                </div>
+
+            </div>
+
+
+            <!-- TEMPO -->
+
+            <div class="time-control">
+
+                <label for="tempo">
+                    Tempo da corrida
+                </label>
+
+                <div class="input-wrapper">
+
+                    <input
+                        type="number"
+                        id="tempo"
+                        value="4"
+                        min="0.5"
+                        max="20"
+                        step="0.5"
+                    >
+
+                    <span>horas</span>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="calcularBtn"
+                class="calculate-button"
+            >
+                ATUALIZAR SIMULAÇÃO
+            </button>
+
+
+            <!-- RESULTADOS -->
+
+            <div class="results">
+
+                <div class="result-card highlight">
+
+                    <span class="result-label">
+                        DISTÂNCIA FINAL
+                    </span>
+
+                    <strong id="distanciaResultado">
+                        32 km
+                    </strong>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <span class="result-label">
+                        VELOCIDADE
+                    </span>
+
+                    <strong id="velocidadeResultado">
+                        8 km/h
+                    </strong>
+
+                </div>
+
+
+                <div class="result-card">
+
+                    <span class="result-label">
+                        TEMPO
+                    </span>
+
+                    <strong id="tempoResultado">
+                        4 h
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PISTA ANIMADA
+        ========================== -->
+
+        <section class="race-section">
+
+            <div class="section-title">
+
+                <span>02</span>
+
+                <div>
+
+                    <h2>Veja o movimento</h2>
+
+                    <p>
+                        A animação representa visualmente o movimento
+                        calculado pela função.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="track">
+
+                <div class="track-line"></div>
+
+                <div
+                    class="runner"
+                    id="runner"
+                >
+
+                    <img
+                        src="assets/corredor.png"
+                        alt="Corredor em movimento"
+                        onerror="this.style.display='none'"
+                    >
+
+                    <div class="runner-fallback">
+                        RUN
+                    </div>
+
+                </div>
+
+
+                <div class="finish-line">
+                    CHEGADA
+                </div>
+
+            </div>
+
+
+            <div class="race-info">
+
+                <div>
+
+                    <span>TEMPO</span>
+
+                    <strong id="raceTime">
+                        0,0 h
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>DISTÂNCIA</span>
+
+                    <strong id="raceDistance">
+                        0 km
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>VELOCIDADE</span>
+
+                    <strong id="raceSpeed">
+                        8 km/h
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FUNÇÃO
+        ========================== -->
+
+        <section class="math-section">
+
+            <div class="section-title">
+
+                <span>03</span>
+
+                <div>
+
+                    <h2>A função da corrida</h2>
+
+                    <p>
+                        Transformamos o movimento em uma expressão matemática.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="function-card">
+
+                <span>FUNÇÃO AFIM</span>
+
+                <div id="funcaoResultado">
+                    f(x) = 8x
+                </div>
+
+                <p id="funcaoDescricao">
+                    A cada hora, o corredor percorre 8 km.
+                </p>
+
+            </div>
+
+
+            <div class="coefficient-grid">
+
+                <div class="coefficient-card">
+
+                    <span>
+                        COEFICIENTE ANGULAR
+                    </span>
+
+                    <strong id="coefAngular">
+                        8
+                    </strong>
+
+                    <p>
+                        Representa a taxa de variação da distância,
+                        relacionada à velocidade.
+                    </p>
+
+                </div>
+
+
+                <div class="coefficient-card">
+
+                    <span>
+                        COEFICIENTE LINEAR
+                    </span>
+
+                    <strong id="coefLinear">
+                        0
+                    </strong>
+
+                    <p>
+                        Representa a posição inicial do corredor.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             TABELA
+        ========================== -->
+
+        <section class="table-section">
+
+            <div class="section-title">
+
+                <span>04</span>
+
+                <div>
+
+                    <h2>Tempo × distância</h2>
+
+                    <p>
+                        Os dados da corrida organizados em uma tabela.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Tempo</th>
+
+                            <th>Distância</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="tabelaDados"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             GRÁFICO
+        ========================== -->
+
+        <section class="graph-section">
+
+            <div class="section-title">
+
+                <span>05</span>
+
+                <div>
+
+                    <h2>Do movimento ao gráfico</h2>
+
+                    <p>
+                        Observe como a distância aumenta conforme o tempo passa.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="graph-card">
+
+                <div class="graph-info">
+
+                    <div>
+
+                        <span>EIXO X</span>
+
+                        <strong>Tempo (h)</strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>EIXO Y</span>
+
+                        <strong>Distância (km)</strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="graph-container">
+
+                    <svg
+                        id="grafico"
+                        viewBox="0 0 800 450"
+                        preserveAspectRatio="none"
+                    ></svg>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             EXPLICAÇÃO
+        ========================== -->
+
+        <section class="explanation">
+
+            <div class="section-title">
+
+                <span>06</span>
+
+                <div>
+
+                    <h2>O que está acontecendo?</h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="explanation-content">
+
+                <div>
+
+                    <h3>Velocidade</h3>
+
+                    <p>
+                        A velocidade determina quanto a distância
+                        aumenta a cada hora.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <h3>Função</h3>
+
+                    <p>
+                        A função representa matematicamente a relação
+                        entre tempo e distância.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <h3>Gráfico</h3>
+
+                    <p>
+                        A inclinação da reta representa a taxa de
+                        variação da distância.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         RODAPÉ
+    ========================== -->
+
+    <footer>
+
+        <strong>RunMath</strong>
+
+        <p>
+            Projeto interdisciplinar — Geometria Analítica no Mundo Real
+        </p>
+
+        <span>
+            Matemática • Física • Tecnologia
+        </span>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
